@@ -1,9 +1,9 @@
 import constants from '@/constants';
-import { Controller, Get, HttpCode } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
 import { HealthCheck, HealthCheckService, TypeOrmHealthIndicator } from '@nestjs/terminus';
 
 const { HEALTH_CHECK } = constants.routeApis;
-const { OK } = constants.shared.HTTP_CODES;
+const { OK } = HttpStatus;
 
 @Controller()
 export class HealthController {

@@ -1,21 +1,7 @@
 const shared = {
-  HTTP_CODES: {
-    BAD_REQUEST: 400,
-    CREATED: 201,
-    FORBIDDEN: 403,
-    INTERNAL_SERVER_ERROR: 500,
-    NO_CONTENT: 204,
-    NOT_FOUND: 404,
-    OK: 200,
-    UNAUTHORIZED: 401,
-  },
-
-  HTTP_METHODS: {
-    DELETE: 'delete',
-    GET: 'get',
-    PATCH: 'patch',
-    POST: 'post',
-    PUT: 'put',
+  ERROR_CODES: {
+    ERR_001: 'ERR_001',
+    ERR_500: 'ERR_500',
   },
 
   NODE_ENVS: {

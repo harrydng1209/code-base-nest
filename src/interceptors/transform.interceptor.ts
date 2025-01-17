@@ -1,5 +1,5 @@
-import { EResponseStatus } from '@/models/enums/shared.enum';
-import { TSuccessResponse } from '@/models/types/shared.type';
+import { EResponseStatus } from '@/models/enums/auth.enum';
+import { TSuccessResponse } from '@/models/types/auth.type';
 import utils from '@/utils';
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs';
@@ -18,7 +18,7 @@ export class TransformInterceptor<T> implements NestInterceptor {
       map((data) => {
         const successResponse: TSuccessResponse<T> = {
           data: convertToSnakeCase(data.data),
-          meta: convertToSnakeCase(data.meta) || {},
+          meta: convertToSnakeCase(data.meta) || null,
           status: EResponseStatus.Success,
         };
         return successResponse;

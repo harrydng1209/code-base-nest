@@ -1,7 +1,16 @@
 import constants from '@/constants';
 import { JwtAuthGuard } from '@/guards/jwt-auth.guard';
 import { LocalAuthGuard } from '@/guards/local-auth.guard';
-import { Body, Controller, Get, HttpCode, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 
 import { UserEntity } from '../users/entities/user.entity';
 import { AuthService } from './auth.service';
@@ -9,7 +18,7 @@ import { ProfileResponseDto } from './dtos/profile.dto';
 import { RegisterRequestDto } from './dtos/register.dto';
 
 const { AUTH } = constants.routeApis;
-const { CREATED, OK } = constants.shared.HTTP_CODES;
+const { CREATED, OK } = HttpStatus;
 
 @Controller()
 export class AuthController {
