@@ -22,6 +22,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       const throwError = {
         code: ERR_001,
+        data: null,
         message: 'Invalid email or password',
       };
       throw new BaseHttpException(throwError, BAD_REQUEST);

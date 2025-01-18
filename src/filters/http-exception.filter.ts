@@ -1,7 +1,12 @@
 import { BaseHttpException } from '@/exceptions/base-http.exception';
 import { EResponseStatus } from '@/models/enums/auth.enum';
-import { IFailureResponse, IThrowError } from '@/models/interfaces/auth.interface';
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
+import { TFailureResponse, TThrowError } from '@/models/types/auth.type';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+} from '@nestjs/common';
 import { Response } from 'express';
 
 @Catch(HttpException)
@@ -11,17 +16,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = context.getResponse<Response>();
     const status = exception.getStatus();
 
-    let throwError: IThrowError = {
+    let throwError: TThrowError = {
       code: 'ERR_500',
+      data: null,
       message: exception.message || 'Internal server error',
     };
 
-    if (exception instanceof BaseHttpException) {
-      const { code, message } = exception.getResponse() as IThrowError;
-      throwError = { code, message };
-    }
+    if (exception instanceof BaseHttpException)
+      throwError = exception.getResponse() as TThrowError;
 
-    const failureResponse: IFailureResponse = {
+    const failureResponse: TFailureResponse = {
       error: throwError,
       status: EResponseStatus.Failure,
     };

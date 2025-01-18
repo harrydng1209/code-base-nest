@@ -1,8 +1,8 @@
-import { IThrowError } from '@/models/interfaces/auth.interface';
+import { TThrowError } from '@/models/types/auth.type';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class BaseHttpException extends HttpException {
-  constructor(throwError: IThrowError, status: HttpStatus) {
+  constructor(throwError: TThrowError, status: HttpStatus) {
     super(throwError, status);
   }
 }

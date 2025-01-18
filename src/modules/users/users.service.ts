@@ -1,9 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import constants from '@/constants';
+import { BaseHttpException } from '@/exceptions/base-http.exception';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare, hash } from 'bcrypt';
 import { Repository } from 'typeorm';
 
 import { UserEntity } from './entities/user.entity';
+
+const { ERR_001 } = constants.shared.ERROR_CODES;
+const { CONFLICT, NOT_FOUND } = HttpStatus;
 
 @Injectable()
 export class UsersService {
@@ -13,8 +18,27 @@ export class UsersService {
   ) {}
 
   async createUser(userData: Partial<UserEntity>) {
+    const { email, password, username } = userData;
+
+    const errors: { fields: string[] } = { fields: [] };
+
+    const existingEmail = await this.findByEmail(email);
+    if (existingEmail) errors.fields.push('email');
+
+    const existingUsername = await this.findByUsername(username);
+    if (existingUsername) errors.fields.push('username');
+
+    if (errors.fields.length > 0) {
+      const throwError = {
+        code: ERR_001,
+        data: errors,
+        message: 'Fields already exist',
+      };
+      throw new BaseHttpException(throwError, CONFLICT);
+    }
+
     const user = this.userRepository.create(userData);
-    const hashedPassword = await hash(userData.password, 10);
+    const hashedPassword = await hash(password, 10);
 
     user.password = hashedPassword;
     user.createdAt = new Date();
@@ -24,13 +48,24 @@ export class UsersService {
   }
 
   findByEmail(email: string) {
-    const user = this.userRepository.findOneBy({ email });
+    return this.userRepository.findOneBy({ email });
+  }
+
+  findById(id: number) {
+    const user = this.userRepository.findOneBy({ id });
+    if (!user) {
+      const throwError = {
+        code: ERR_001,
+        data: null,
+        message: 'Account does not exist',
+      };
+      throw new BaseHttpException(throwError, NOT_FOUND);
+    }
     return user;
   }
 
-  findById(userId: number) {
-    const user = this.userRepository.findOneBy({ id: userId });
-    return user;
+  findByUsername(username: string) {
+    return this.userRepository.findOneBy({ username });
   }
 
   async validateUser(email: string, password: string) {

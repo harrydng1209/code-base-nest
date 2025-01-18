@@ -44,7 +44,6 @@ export class AuthController {
   @HttpCode(CREATED)
   @Post(AUTH.REGISTER)
   register(@Body() userData: RegisterRequestDto) {
-    const data = this.authService.register(userData);
-    return { data };
+    return this.authService.register(userData);
   }
 }
