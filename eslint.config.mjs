@@ -6,7 +6,14 @@ import tsLint from 'typescript-eslint';
 
 export default [
   {
-    ignores: ['**/.git/', '**/dist/', '**/node_modules/', '**/pnpm-lock.yaml'],
+    ignores: [
+      '**/.git/',
+      '**/.husky/',
+      '**/dist/',
+      '**/node_modules/',
+      '**/pnpm-lock.yaml',
+      'src/@types/',
+    ],
   },
 
   jsLint.configs.recommended,

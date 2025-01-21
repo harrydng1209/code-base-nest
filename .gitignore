@@ -42,6 +42,8 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Other files
+*.tsbuildinfo
+
 .env
 .env.*
 !.env.sample
