@@ -5,8 +5,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 
-const { ERR_001 } = constants.shared.ERROR_CODES;
-const { BAD_REQUEST } = HttpStatus;
+const { ERROR_CODES } = constants.shared;
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -21,11 +20,11 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     const user = await this.usersService.validateUser(email, password);
     if (!user) {
       const throwError = {
-        code: ERR_001,
+        code: ERROR_CODES.ERR_001,
         data: null,
         message: 'Invalid email or password',
       };
-      throw new BaseHttpException(throwError, BAD_REQUEST);
+      throw new BaseHttpException(throwError, HttpStatus.BAD_REQUEST);
     }
     return user;
   }

@@ -8,6 +8,7 @@ This template should help you get started developing with Nest.
 - **Description**: This template should help you get started developing with Nest
 - **Version**: 0.1.0
 - **License**: MIT
+- **Main**: src/main.ts
 
 ## Author
 

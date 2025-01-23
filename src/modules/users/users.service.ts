@@ -7,8 +7,7 @@ import { Repository } from 'typeorm';
 
 import { UserEntity } from './entities/user.entity';
 
-const { ERR_001 } = constants.shared.ERROR_CODES;
-const { CONFLICT, NOT_FOUND } = HttpStatus;
+const { ERROR_CODES } = constants.shared;
 
 @Injectable()
 export class UsersService {
@@ -30,11 +29,11 @@ export class UsersService {
 
     if (errors.fields.length > 0) {
       const throwError = {
-        code: ERR_001,
+        code: ERROR_CODES.ERR_001,
         data: errors,
         message: 'Fields already exist',
       };
-      throw new BaseHttpException(throwError, CONFLICT);
+      throw new BaseHttpException(throwError, HttpStatus.CONFLICT);
     }
 
     const user = this.userRepository.create(userData);
@@ -55,11 +54,11 @@ export class UsersService {
     const user = this.userRepository.findOneBy({ id });
     if (!user) {
       const throwError = {
-        code: ERR_001,
+        code: ERROR_CODES.ERR_001,
         data: null,
         message: 'Account does not exist',
       };
-      throw new BaseHttpException(throwError, NOT_FOUND);
+      throw new BaseHttpException(throwError, HttpStatus.NOT_FOUND);
     }
     return user;
   }

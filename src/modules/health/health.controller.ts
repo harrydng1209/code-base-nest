@@ -8,8 +8,7 @@ import {
 } from '@nestjs/terminus';
 
 const { HEALTH_CHECK } = constants.routeApis;
-const { ERR_001 } = constants.shared.ERROR_CODES;
-const { OK, SERVICE_UNAVAILABLE } = HttpStatus;
+const { ERROR_CODES } = constants.shared;
 
 @Controller()
 export class HealthController {
@@ -20,7 +19,7 @@ export class HealthController {
 
   @Get(HEALTH_CHECK)
   @HealthCheck()
-  @HttpCode(OK)
+  @HttpCode(HttpStatus.OK)
   async check() {
     try {
       const data = await this.healthCheckService.check([
@@ -30,11 +29,11 @@ export class HealthController {
     } catch (error) {
       console.error(error);
       const throwError = {
-        code: ERR_001,
+        code: ERROR_CODES.ERR_001,
         data: null,
         message: 'Health check failed',
       };
-      throw new BaseHttpException(throwError, SERVICE_UNAVAILABLE);
+      throw new BaseHttpException(throwError, HttpStatus.SERVICE_UNAVAILABLE);
     }
   }
 }

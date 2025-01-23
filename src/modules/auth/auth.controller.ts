@@ -18,13 +18,12 @@ import { ProfileResponseDto } from './dtos/profile.dto';
 import { RegisterRequestDto } from './dtos/register.dto';
 
 const { AUTH } = constants.routeApis;
-const { CREATED, OK } = HttpStatus;
 
 @Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @HttpCode(OK)
+  @HttpCode(HttpStatus.OK)
   @Post(AUTH.LOGIN)
   @UseGuards(LocalAuthGuard)
   login(@Request() request: { user: UserEntity }) {
@@ -33,7 +32,7 @@ export class AuthController {
   }
 
   @Get(AUTH.PROFILE)
-  @HttpCode(OK)
+  @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   async profile(@Request() request: { userId: number }) {
     const user = await this.authService.profile(request.userId);
@@ -41,7 +40,7 @@ export class AuthController {
     return { data };
   }
 
-  @HttpCode(CREATED)
+  @HttpCode(HttpStatus.CREATED)
   @Post(AUTH.REGISTER)
   register(@Body() userData: RegisterRequestDto) {
     return this.authService.register(userData);
