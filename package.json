@@ -10,8 +10,11 @@
     "url": "https://github.com/harrydng1209"
   },
   "engines": {
-    "node": ">=20.x",
-    "npm": ">=10.x"
+    "node": ">= 22",
+    "pnpm": ">= 10",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm",
+    "bun": "please-use-pnpm"
   },
   "scripts": {
     "build": "nest build",
@@ -28,7 +31,7 @@
     "precommit": "lint-staged && validate-branch-name"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "*.{js,ts}": [
       "pnpm run format",
       "pnpm run lint",
       "git add ."
@@ -47,7 +50,7 @@
     "@nestjs/swagger": "^8.1.1",
     "@nestjs/terminus": "^10.2.3",
     "@nestjs/typeorm": "^10.0.2",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "dayjs": "^1.11.13",
@@ -68,7 +71,6 @@
     "@eslint/js": "^9.18.0",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
-    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
     "@types/node": "^20.3.1",
     "@types/passport-jwt": "^4.0.1",

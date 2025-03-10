@@ -21,7 +21,7 @@ const { AUTH } = constants.routeApis;
 
 @Controller()
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   @HttpCode(HttpStatus.OK)
   @Post(AUTH.LOGIN)

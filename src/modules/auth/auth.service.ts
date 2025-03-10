@@ -8,8 +8,8 @@ import { RegisterRequestDto } from './dtos/register.dto';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly usersService: UsersService,
-    private readonly jwtService: JwtService,
+    private usersService: UsersService,
+    private jwtService: JwtService,
   ) {}
 
   login(userData: UserEntity) {

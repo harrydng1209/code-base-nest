@@ -2,7 +2,7 @@ import constants from '@/constants';
 import { BaseHttpException } from '@/exceptions/base-http.exception';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { compare, hash } from 'bcrypt';
+import { compare, hash } from 'bcryptjs';
 import { Repository } from 'typeorm';
 
 import { UserEntity } from './entities/user.entity';
@@ -13,7 +13,7 @@ const { ERROR_CODES } = constants.shared;
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
+    private userRepository: Repository<UserEntity>,
   ) {}
 
   async createUser(userData: Partial<UserEntity>) {

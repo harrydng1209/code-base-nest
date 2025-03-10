@@ -17,6 +17,7 @@ import { UsersModule } from './modules/users/users.module';
   imports: [
     AuthModule,
     UsersModule,
+    HealthModule,
     TypeOrmModule.forRoot({
       database: process.env.DB_DATABASE,
       entities: [UserEntity],
@@ -27,7 +28,6 @@ import { UsersModule } from './modules/users/users.module';
       type: 'postgres',
       username: process.env.DB_USERNAME,
     }),
-    HealthModule,
   ],
   providers: [
     AppService,
