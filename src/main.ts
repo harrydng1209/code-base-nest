@@ -9,10 +9,10 @@ async function bootstrap() {
   app.enableCors({
     credentials: true,
     methods: 'GET,PUT,PATCH,POST,DELETE',
-    origin: process.env.ORIGIN_BASE_URL,
+    origin: process.env.ORIGIN_BASE_URL || 'http://localhost:3000',
   });
 
-  await app.listen(process.env.PORT ?? 8080);
+  await app.listen(process.env.PORT || 8080);
 }
 
 bootstrap();

@@ -1,4 +1,4 @@
-import constants from '@/constants';
+import { AUTH } from '@/constants/route-apis.const';
 import { JwtAuthGuard } from '@/guards/jwt-auth.guard';
 import { LocalAuthGuard } from '@/guards/local-auth.guard';
 import {
@@ -16,8 +16,6 @@ import { UserEntity } from '../users/entities/user.entity';
 import { AuthService } from './auth.service';
 import { ProfileResponseDto } from './dtos/profile.dto';
 import { RegisterRequestDto } from './dtos/register.dto';
-
-const { AUTH } = constants.routeApis;
 
 @Controller()
 export class AuthController {

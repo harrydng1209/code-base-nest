@@ -1,9 +1,8 @@
-import constants from '@/constants';
+import { ERROR_CODES } from '@/constants/shared.const';
 
 import { EResponseStatus } from '../enums/auth.enum';
 
-export type TErrorCodes =
-  (typeof constants.shared.ERROR_CODES)[keyof typeof constants.shared.ERROR_CODES];
+export type TErrorCodes = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
 
 export interface TFailureResponse<D = unknown> {
   error: TThrowError<D>;

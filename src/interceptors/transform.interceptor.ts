@@ -1,6 +1,6 @@
 import { EResponseStatus } from '@/models/enums/auth.enum';
 import { TSuccessResponse } from '@/models/types/auth.type';
-import utils from '@/utils';
+import { convertToCamelCase, convertToSnakeCase } from '@/utils/shared.util';
 import {
   CallHandler,
   ExecutionContext,
@@ -9,8 +9,6 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-const { convertToCamelCase, convertToSnakeCase } = utils.shared;
 
 @Injectable()
 export class TransformInterceptor implements NestInterceptor {

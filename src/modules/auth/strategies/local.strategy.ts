@@ -1,11 +1,9 @@
-import constants from '@/constants';
+import { ERROR_CODES } from '@/constants/shared.const';
 import { BaseHttpException } from '@/exceptions/base-http.exception';
 import { UsersService } from '@/modules/users/users.service';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
-
-const { ERROR_CODES } = constants.shared;
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {

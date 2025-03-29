@@ -1,4 +1,4 @@
-import constants from '@/constants';
+import { ERROR_CODES } from '@/constants/shared.const';
 import { BaseHttpException } from '@/exceptions/base-http.exception';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,8 +6,6 @@ import { compare, hash } from 'bcryptjs';
 import { Repository } from 'typeorm';
 
 import { UserEntity } from './entities/user.entity';
-
-const { ERROR_CODES } = constants.shared;
 
 @Injectable()
 export class UsersService {
