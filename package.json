@@ -1,6 +1,6 @@
 {
   "name": "code-base-nest",
-  "description": "This template should help get you started developing with Nest",
+  "description": "This template will help you get started with Nest",
   "version": "0.1.0",
   "license": "MIT",
   "main": "src/main.ts",

@@ -2,7 +2,7 @@ import type { TObjectUnknown } from '@/models/types/shared.type';
 
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
-import qs from 'qs';
+import { stringify } from 'qs';
 import stringTemplate from 'string-template';
 
 dayjs.extend(utc);
@@ -81,7 +81,7 @@ export const formatQueryString = (
   const queryString =
     typeof query === 'string'
       ? query
-      : qs.stringify(query, { arrayFormat: 'brackets' });
+      : stringify(query, { arrayFormat: 'brackets' });
   return `${baseUrl}?${queryString}`;
 };
 

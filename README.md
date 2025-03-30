@@ -1,11 +1,11 @@
 # code-base-nest
 
-This template should help you get started developing with Nest
+This template will help you get started with Nest
 
 ## Overview
 
 - **Name**: code-base-nest
-- **Description**: This template should help you get started developing with Nest
+- **Description**: This template will help you get started with Nest
 - **Version**: 0.1.0
 - **License**: MIT
 - **Main**: src/main.ts
@@ -18,7 +18,7 @@ This template should help you get started developing with Nest
 
 ## Requirements
 
-- **Node.js**: >= 22
+- **Node**: >= 22
 - **pnpm**: >= 10
 - **npm**: please-use-pnpm
 - **yarn**: please-use-pnpm
