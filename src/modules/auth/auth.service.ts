@@ -2,6 +2,7 @@ import { ERROR_CODES } from '@/constants/shared.const';
 import { BaseHttpException } from '@/exceptions/base-http.exception';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Response } from 'express';
 
 import { UserEntity } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
@@ -14,7 +15,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  login(userParam: UserEntity) {
+  login(userParam: UserEntity, response: Response) {
     const jwtData = {
       userId: userParam.id,
     };
@@ -22,9 +23,15 @@ export class AuthService {
       expiresIn: process.env.JWT_REFRESH_EXPIRE || '10d',
     });
 
+    response.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      maxAge: 10 * 24 * 60 * 60 * 1000,
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+    });
+
     return {
       accessToken: this.jwtService.sign(jwtData),
-      refreshToken,
     };
   }
 

@@ -1,5 +1,7 @@
 import { AUTH } from '@/constants/route-apis.const';
+import { ERROR_CODES } from '@/constants/shared.const';
 import { CurrentUser } from '@/decorators/current-user.decorator';
+import { BaseHttpException } from '@/exceptions/base-http.exception';
 import { JwtAuthGuard } from '@/guards/jwt-auth.guard';
 import { LocalAuthGuard } from '@/guards/local-auth.guard';
 import {
@@ -9,16 +11,23 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Request,
+  Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { Request, Response } from 'express';
 
 import { UserEntity } from '../users/entities/user.entity';
 import { AuthService } from './auth.service';
 import { ProfileResponseDto } from './dtos/profile.dto';
-import { RefeshTokenRequestDto } from './dtos/refresh-token.dto';
 import { RegisterRequestDto } from './dtos/register.dto';
+
+interface IRequestWithCookies {
+  cookies?: {
+    [key: string]: string;
+  };
+}
 
 @Controller()
 export class AuthController {
@@ -27,8 +36,11 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post(AUTH.LOGIN)
   @UseGuards(LocalAuthGuard)
-  login(@Request() request: { user: UserEntity }) {
-    const data = this.authService.login(request.user);
+  login(
+    @Req() request: { user: UserEntity },
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const data = this.authService.login(request.user, response);
     return { data };
   }
 
@@ -44,8 +56,20 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post(AUTH.REFRESH_TOKEN)
-  async refresh(@Body() payload: RefeshTokenRequestDto) {
-    const data = await this.authService.refreshToken(payload.refreshToken);
+  async refresh(@Req() request: Request) {
+    const refreshToken = (request as unknown as IRequestWithCookies).cookies
+      ?.refreshToken;
+
+    if (!refreshToken) {
+      const throwError = {
+        code: ERROR_CODES.ERR_001,
+        data: null,
+        message: 'Refresh token not found',
+      };
+      throw new BaseHttpException(throwError, HttpStatus.UNAUTHORIZED);
+    }
+
+    const data = await this.authService.refreshToken(refreshToken);
     return { data };
   }
 
