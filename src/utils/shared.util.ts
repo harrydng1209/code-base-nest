@@ -92,10 +92,11 @@ export const formatString = (
   return stringTemplate(template, values);
 };
 
-export const sleep = (second: number) => {
-  return new Promise<void>((resolve) => {
-    setTimeout(() => {
+export const sleep = async (second: number) => {
+  return await new Promise<void>((resolve) => {
+    const timer = setTimeout(() => {
       resolve();
+      clearTimeout(timer);
     }, 1000 * second);
   });
 };

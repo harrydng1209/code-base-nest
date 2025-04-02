@@ -1,10 +1,10 @@
-# code-base-nest
+# codebase-nest
 
 This template will help you get started with Nest
 
 ## Overview
 
-- **Name**: code-base-nest
+- **Name**: codebase-nest
 - **Description**: This template will help you get started with Nest
 - **Version**: 0.1.0
 - **License**: MIT
@@ -46,7 +46,7 @@ This project includes several scripts to assist with development:
 To get started with this template, clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/harrydng1209/code-base-nest.git
-cd code-base-nest
+git clone https://github.com/harrydng1209/codebase-nest.git
+cd codebase-nest
 pnpm install
 ```

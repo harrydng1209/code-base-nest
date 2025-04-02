@@ -14,8 +14,8 @@ export class UsersService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  async createUser(userData: Partial<UserEntity>) {
-    const { email, password, username } = userData;
+  async createUser(userParam: Partial<UserEntity>) {
+    const { email, password, username } = userParam;
 
     const errors: { fields: string[] } = { fields: [] };
 
@@ -34,7 +34,7 @@ export class UsersService {
       throw new BaseHttpException(throwError, HttpStatus.CONFLICT);
     }
 
-    const user = this.userRepository.create(userData);
+    const user = this.userRepository.create(userParam);
     const hashedPassword = await hash(password, 10);
 
     user.password = hashedPassword;

@@ -1,4 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { ERROR_CODES } from '@/constants/shared.const';
+import { BaseHttpException } from '@/exceptions/base-http.exception';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { UserEntity } from '../users/entities/user.entity';
@@ -12,20 +14,56 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  login(userData: UserEntity) {
-    const payload = {
-      userId: userData.id,
+  login(userParam: UserEntity) {
+    const jwtData = {
+      userId: userParam.id,
     };
+    const refreshToken = this.jwtService.sign(jwtData, {
+      expiresIn: process.env.JWT_REFRESH_EXPIRE || '10d',
+    });
+
     return {
-      accessToken: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(jwtData),
+      refreshToken,
     };
   }
 
-  profile(userId: number) {
-    return this.usersService.findById(userId);
+  profile(userIdParam: number) {
+    return this.usersService.findById(userIdParam);
   }
 
-  register(userData: RegisterRequestDto) {
-    return this.usersService.createUser(userData);
+  async refreshToken(refreshToken: string) {
+    try {
+      const payload = this.jwtService.verify(refreshToken);
+      const user = await this.usersService.findById(payload.userId);
+
+      if (!user) {
+        const throwError = {
+          code: ERROR_CODES.ERR_001,
+          data: null,
+          message: 'User not found',
+        };
+        throw new BaseHttpException(throwError, HttpStatus.UNAUTHORIZED);
+      }
+
+      const jwtData = {
+        userId: user.id,
+      };
+      const newAccessToken = this.jwtService.sign(jwtData);
+
+      return { accessToken: newAccessToken };
+    } catch (error) {
+      console.error(error);
+      const throwError = {
+        code: ERROR_CODES.ERR_001,
+        data: null,
+        message: 'Invalid refresh token',
+      };
+      throw new BaseHttpException(throwError, HttpStatus.UNAUTHORIZED);
+    }
+  }
+
+  register(userParam: RegisterRequestDto) {
+    return this.usersService.createUser(userParam);
   }
 }

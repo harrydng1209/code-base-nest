@@ -4,10 +4,10 @@ import { EResponseStatus } from '../enums/auth.enum';
 
 export type TErrorCodes = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
 
-export interface TFailureResponse<D = unknown> {
+export type TFailureResponse<D = unknown> = {
   error: TThrowError<D>;
   status: EResponseStatus;
-}
+};
 
 export type TSuccessResponse<D = unknown, M = unknown> = {
   data: D;
@@ -15,8 +15,8 @@ export type TSuccessResponse<D = unknown, M = unknown> = {
   status: EResponseStatus;
 };
 
-export interface TThrowError<D = unknown> {
+export type TThrowError<D = unknown> = {
   code: TErrorCodes;
   data: D;
   message: string;
-}
+};
