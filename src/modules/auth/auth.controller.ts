@@ -1,5 +1,5 @@
 import { AUTH } from '@/constants/route-apis.const';
-import { ERROR_CODES } from '@/constants/shared.const';
+import { COOKIE_KEYS, ERROR_CODES } from '@/constants/shared.const';
 import { CurrentUser } from '@/decorators/current-user.decorator';
 import { BaseHttpException } from '@/exceptions/base-http.exception';
 import { JwtAuthGuard } from '@/guards/jwt-auth.guard';
@@ -57,8 +57,9 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post(AUTH.REFRESH_TOKEN)
   async refresh(@Req() request: Request) {
-    const refreshToken = (request as unknown as IRequestWithCookies).cookies
-      ?.refreshToken;
+    const refreshToken = (request as unknown as IRequestWithCookies).cookies?.[
+      COOKIE_KEYS.REFRESH_TOKEN
+    ];
 
     if (!refreshToken) {
       const throwError = {

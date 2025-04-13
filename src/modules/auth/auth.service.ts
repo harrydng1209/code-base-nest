@@ -1,4 +1,4 @@
-import { ERROR_CODES } from '@/constants/shared.const';
+import { COOKIE_KEYS, ERROR_CODES } from '@/constants/shared.const';
 import { BaseHttpException } from '@/exceptions/base-http.exception';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -23,7 +23,7 @@ export class AuthService {
       expiresIn: process.env.JWT_REFRESH_EXPIRE || '10d',
     });
 
-    response.cookie('refreshToken', refreshToken, {
+    response.cookie(COOKIE_KEYS.REFRESH_TOKEN, refreshToken, {
       httpOnly: true,
       maxAge: 10 * 24 * 60 * 60 * 1000,
       sameSite: 'strict',

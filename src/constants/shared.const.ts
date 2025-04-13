@@ -23,3 +23,7 @@ export const REGEXES = {
   URL: /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ;,./?%&=]*)?$/,
   USERNAME: /^[a-zA-Z0-9_]{3,16}$/,
 } as const;
+
+export const COOKIE_KEYS = {
+  REFRESH_TOKEN: 'REFRESH_TOKEN',
+} as const;
