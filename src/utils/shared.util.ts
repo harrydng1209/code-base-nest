@@ -1,4 +1,4 @@
-import type { TObjectUnknown } from '@/models/types/shared.type';
+import type { TDate, TObjectUnknown } from '@/models/types/shared.type';
 
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
@@ -63,7 +63,7 @@ export const convertToSnakeCase = <T>(
   return newObject as T;
 };
 
-export const formatDateUTC = (date: Date) => {
+export const formatDateUTC = (date: TDate) => {
   return dayjs(date).utc().toISOString();
 };
 
